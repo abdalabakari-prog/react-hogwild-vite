@@ -1,18 +1,14 @@
 import React from "react";
 import HogCard from "./HogCard";
 
-function HogList({ hogs, onHideHog }) {
-  return (
-    <div className="ui grid container">
-      {hogs.map(hog => (
-        <HogCard 
-          key={hog.name} 
-          hog={hog}
-          onHideHog={onHideHog}
-        />
-      ))}
-    </div>
-  );
-}
+const HogList = ({ hogs }) => {
+    return (
+        <div className="ui grid container">
+            {hogs.map((hog, index) => (
+                <HogCard key={index} hog={hog} />
+            ))}
+        </div>
+    );
+};
 
 export default HogList;
