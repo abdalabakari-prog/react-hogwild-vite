@@ -21,10 +21,10 @@ const HogForm = ({ addHog }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        // Don't submit if required fields are empty
-        if (!formData.name || !formData.specialty || !formData.weight || !formData["highest medal achieved"] || !formData.image) {
-            return;
-        }
+        // // Don't submit if required fields are empty
+        // if (!formData.name || !formData.specialty || !formData.weight || !formData["highest medal achieved"] || !formData.image) {
+        //     return;
+        // }
         
         const newHog = {
             ...formData,
