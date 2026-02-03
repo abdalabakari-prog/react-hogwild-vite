@@ -7,15 +7,19 @@ const FilterSort = ({ showGreased, setShowGreased, sortBy, setSortBy }) => {
                 <div className="field">
                     <input
                         type="checkbox"
-                        id="greased"
+                        id="greased-filter"
                         checked={showGreased}
                         onChange={(e) => setShowGreased(e.target.checked)}
                     />
-                    <label htmlFor="greased">Show Greased Hogs Only</label>
+                    <label htmlFor="greased-filter">Greased Pigs Only?</label>
                 </div>
                 <div className="field">
-                    <label>Sort By:</label>
-                    <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                    <label htmlFor="sort-select">Sort by:</label>
+                    <select 
+                        id="sort-select"
+                        value={sortBy} 
+                        onChange={(e) => setSortBy(e.target.value)}
+                    >
                         <option value="">None</option>
                         <option value="name">Name</option>
                         <option value="weight">Weight</option>
