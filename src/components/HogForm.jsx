@@ -1,114 +1,114 @@
 import React, { useState } from "react";
 
-function HogForm({ onAddHog }) {
-  const [name, setName] = useState("");
-  const [specialty, setSpecialty] = useState("");
-  const [greased, setGreased] = useState(false);
-  const [weight, setWeight] = useState("");
-  const [medal, setMedal] = useState("");
-  const [image, setImage] = useState("");
+const HogForm = ({ addHog }) => {
+    const [formData, setFormData] = useState({
+        name: "",
+        specialty: "",
+        greased: false,
+        weight: "",
+        "highest medal achieved": "",
+        image: ""
+    });
 
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    const newHog = {
-      name: name,
-      specialty: specialty,
-      greased: greased,
-      weight: parseFloat(weight),
-      "highest medal achieved": medal,
-      image: image,
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData({
+            ...formData,
+            [name]: type === "checkbox" ? checked : value
+        });
     };
 
-    onAddHog(newHog);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const newHog = {
+            ...formData,
+            weight: parseFloat(formData.weight)
+        };
+        addHog(newHog);
+        setFormData({
+            name: "",
+            specialty: "",
+            greased: false,
+            weight: "",
+            "highest medal achieved": "",
+            image: ""
+        });
+    };
 
-    // Reset form
-    setName("");
-    setSpecialty("");
-    setGreased(false);
-    setWeight("");
-    setMedal("");
-    setImage("");
-  }
-
-  return (
-    <div className="ui segment" style={{ margin: "20px" }}>
-      <h2>Add a New Hog</h2>
-      <form className="ui form" onSubmit={handleSubmit}>
-        <div className="field">
-          <label htmlFor="name">Name</label>
-          <input 
-            type="text" 
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+    return (
+        <div className="ui segment">
+            <h2>Add a New Hog</h2>
+            <form className="ui form" onSubmit={handleSubmit}>
+                <div className="field">
+                    <label htmlFor="name">Name:</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="field">
+                    <label htmlFor="specialty">Specialty:</label>
+                    <input
+                        type="text"
+                        id="specialty"
+                        name="specialty"
+                        value={formData.specialty}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="field">
+                    <label htmlFor="weight">Weight:</label>
+                    <input
+                        type="number"
+                        id="weight"
+                        name="weight"
+                        step="0.1"
+                        value={formData.weight}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="field">
+                    <label htmlFor="highest-medal">Highest Medal Achieved:</label>
+                    <input
+                        type="text"
+                        id="highest-medal"
+                        name="highest medal achieved"
+                        value={formData["highest medal achieved"]}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="field">
+                    <label htmlFor="image">Image:</label>
+                    <input
+                        type="text"
+                        id="image"
+                        name="image"
+                        value={formData.image}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="field">
+                    <input
+                        type="checkbox"
+                        id="greased-input"
+                        name="greased"
+                        checked={formData.greased}
+                        onChange={handleChange}
+                    />
+                    <label htmlFor="greased-input">Greased?</label>
+                </div>
+                <button className="ui button" type="submit">Add Hog</button>
+            </form>
         </div>
-
-        <div className="field">
-          <label htmlFor="specialty">Specialty</label>
-          <input 
-            type="text" 
-            id="specialty"
-            value={specialty}
-            onChange={(e) => setSpecialty(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="field">
-          <label htmlFor="weight">Weight</label>
-          <input 
-            type="number" 
-            id="weight"
-            step="0.1"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="field">
-          <label htmlFor="medal">Highest Medal Achieved</label>
-          <input 
-            type="text" 
-            id="medal"
-            value={medal}
-            onChange={(e) => setMedal(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="field">
-          <label htmlFor="image">Image URL</label>
-          <input 
-            type="text" 
-            id="image"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="field">
-          <div className="ui checkbox">
-            <input 
-              type="checkbox" 
-              id="greased"
-              checked={greased}
-              onChange={(e) => setGreased(e.target.checked)}
-            />
-            <label htmlFor="greased">Greased</label>
-          </div>
-        </div>
-
-        <button type="submit" className="ui button primary">
-          Add Hog
-        </button>
-      </form>
-    </div>
-  );
-}
+    );
+};
 
 export default HogForm;
