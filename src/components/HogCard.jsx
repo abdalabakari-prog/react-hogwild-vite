@@ -10,16 +10,16 @@ const HogCard = ({ hog }) => {
         <div className="ui eight wide column">
             <div aria-label="hog card" className="ui card">
                 <div className="image" onClick={() => setShowDetails(!showDetails)}>
-                    <img src={hog.image} alt={hog.name} />
+                    <img src={hog.image} alt={`Photo of ${hog.name}`} />
                 </div>
                 <div className="content" onClick={() => setShowDetails(!showDetails)}>
                     <h3 className="header">{hog.name}</h3>
                     {showDetails && (
                         <div className="description">
-                            <p><strong>Specialty:</strong> {hog.specialty}</p>
-                            <p><strong>Weight:</strong> {hog.weight}</p>
-                            <p><strong>Greased:</strong> {hog.greased ? "Yes" : "No"}</p>
-                            <p><strong>Highest Medal Achieved:</strong> {hog["highest medal achieved"]}</p>
+                            <p>Specialty: {hog.specialty}</p>
+                            <p>Weight: {hog.weight}</p>
+                            <p>Greased: {hog.greased ? "Yes" : "No"}</p>
+                            <p>Highest Medal Achieved: {hog["highest medal achieved"]}</p>
                         </div>
                     )}
                 </div>
