@@ -1,61 +1,48 @@
 import React, { useState } from "react";
 import Nav from "./Nav";
+import hogs from "../porkers_data";
 import HogList from "./HogList";
 import FilterSort from "./FilterSort";
 import HogForm from "./HogForm";
-import hogs from "../porkers_data";
 
 function App() {
-  const [hogData, setHogData] = useState(hogs);
-  const [showGreased, setShowGreased] = useState(false);
-  const [sortBy, setSortBy] = useState("none");
-  const [hiddenHogs, setHiddenHogs] = useState([]);
+    const [hogData, setHogData] = useState(hogs);
+    const [showGreased, setShowGreased] = useState(false);
+    const [sortBy, setSortBy] = useState("");
 
-  // Add new hog
-  function handleAddHog(newHog) {
-    setHogData([...hogData, newHog]);
-  }
+    const addHog = (newHog) => {
+        setHogData([...hogData, newHog]);
+    };
 
-  // Hide a hog
-  function handleHideHog(hogName) {
-    setHiddenHogs([...hiddenHogs, hogName]);
-  }
+    const getFilteredAndSortedHogs = () => {
+        let displayHogs = [...hogData];
 
-  // Filter and sort hogs
-  function getDisplayedHogs() {
-    let displayedHogs = [...hogData];
+        if (showGreased) {
+            displayHogs = displayHogs.filter(hog => hog.greased);
+        }
 
-    // Filter by greased
-    if (showGreased) {
-      displayedHogs = displayedHogs.filter(hog => hog.greased);
-    }
+        if (sortBy === "name") {
+            displayHogs.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (sortBy === "weight") {
+            displayHogs.sort((a, b) => a.weight - b.weight);
+        }
 
-    // Filter out hidden hogs
-    displayedHogs = displayedHogs.filter(hog => !hiddenHogs.includes(hog.name));
+        return displayHogs;
+    };
 
-    // Sort
-    if (sortBy === "name") {
-      displayedHogs.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortBy === "weight") {
-      displayedHogs.sort((a, b) => a.weight - b.weight);
-    }
-
-    return displayedHogs;
-  }
-
-  return (
-    <div className="App">
-      <Nav />
-      <FilterSort 
-        showGreased={showGreased}
-        setShowGreased={setShowGreased}
-        sortBy={sortBy}
-        setSortBy={setSortBy}
-      />
-      <HogForm onAddHog={handleAddHog} />
-      <HogList hogs={getDisplayedHogs()} onHideHog={handleHideHog} />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Nav />
+            <FilterSort 
+                showGreased={showGreased}
+                setShowGreased={setShowGreased}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+            />
+            <HogForm addHog={addHog} />
+            <HogList hogs={getFilteredAndSortedHogs()} />
+        </div>
+    );
 }
 
 export default App;
